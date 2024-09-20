@@ -6,23 +6,25 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
-const passport = require('passport')
-const session = require('express-session') //manage user sessions in an express.js application 
-const MongoStore = require('connect-mongo') //store session data in a mongoDB database
+// const passport = require('passport')
+// const session = require('express-session') //manage user sessions in an express.js application 
+// const MongoStore = require('connect-mongo') //store session data in a mongoDB database
 const methodOverride = require('method-override')
-const flash = require('express-flash')
-const logger = require('morgan')
+// const flash = require('express-flash')
+// const logger = require('morgan')
 const connectDB = require('./config/database')
-const mainRoutes = require('./routes/main')
-const recipeRoutes = require('./routes/recipe')
+// const mainRoutes = require('./routes/main')
+// const recipeRoutes = require('./routes/recipe')
 
 //ignore
-const commentRoutes = require('./routes/comments')
+// const commentRoutes = require('./routes/comments')
 
-const DB_STRING = process.env.DB_STRING
+// const DB_STRING = process.env.DB_STRING
 
 
-connectDB()
+// connectDB()
+
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.nb0y2.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`)
 
 require('./config/passport')(passport)
 
@@ -43,32 +45,32 @@ app.use(logger('dev'))
 //use forms for put / delete 
 app.use(methodOverride("_method"));  
 
-// Setup sessions - stored in MongoDB
-app.use(
-    session({
-        secret: 'keyboard cat', 
-        resave: false, 
-        saveUninitialized: false, 
-        store: MongoStore.create({ 
-            mongoUrl: DB_STRING
-        })
-    })
-)
+// // Setup sessions - stored in MongoDB
+// app.use(
+//     session({
+//         secret: 'keyboard cat', 
+//         resave: false, 
+//         saveUninitialized: false, 
+//         store: MongoStore.create({ 
+//             mongoUrl: DB_STRING
+//         })
+//     })
+// )
 
 
-// Passport middleware 
-app.use(passport.initialize())
-app.use(passport.session())
+// // Passport middleware 
+// app.use(passport.initialize())
+// app.use(passport.session())
 
-//Use flash messages for errors, info, etc...
-app.use(flash())
+// //Use flash messages for errors, info, etc...
+// app.use(flash())
 
-//setup routes for which the server is listening 
-app.use('/', mainRoutes)
-app.use('/recipe', recipeRoutes)
+// //setup routes for which the server is listening 
+// app.use('/', mainRoutes)
+// app.use('/recipe', recipeRoutes)
 
-//ignore
-app.use('/comment', commentRoutes)
+// //ignore
+// app.use('/comment', commentRoutes)
  
 app.listen(process.env.PORT || 2900, ()=>{
     console.log('Server is running, game on!')
