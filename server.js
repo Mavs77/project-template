@@ -70,7 +70,7 @@ app.use('/recipe', recipeRoutes)
 //ignore
 app.use('/comment', commentRoutes)
  
-app.listen(process.env.PORT || 1993, ()=>{
+app.listen(process.env.PORT || 2900, ()=>{
     console.log('Server is running, game on!')
 })
 
