@@ -6,6 +6,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
+const Item = require('./models/item')
 
 
 
@@ -33,7 +34,56 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json()) 
 
+//setup routes for which the server is listening 
+app.get('/', (req, res) => {
+    res.render('index')
+})
+
+app.get('/item', async (req, res) => {
+    const items = await Item.find({})
+    res.render('item', {items})
+})
+
+//Create 
+app.post('/item', async (req, res) => {
+    const newItem = new Item(req.body)
+    try{
+        await newItem.save()
+        res.redirect('/item'); 
+    }
+    catch (err) {
+        res.redirect('/item?error=true')
+    }
+ })
  
+
+ //Update
+app.post('/item/update/:id', async (req, res) => {
+    const {id} = req.params; 
+    const {name, description} = req.body
+    try{
+        await Item.findByIdAndUpdate(id, {name, description})
+        res.redirect('/item')
+    }
+    catch (err) {
+        res.redirect('/item?error=true')
+    }
+ })
+
+ //Delete
+
+ app.delete('/item/delete/:id', async (req, res) => {
+    const {id} = req.params
+    try{
+        await Item.findByIdAndDelete(id)
+        res.status(200).json({message: 'Item deleted successfully'})
+    }
+    catch (err) {
+        res.redirect('/item?error=true')
+    }
+ })
+
+//start the server 
 app.listen(process.env.PORT || 2900, ()=>{
     console.log(`Server is running on: http://localhost:${process.env.PORT}!`)
 })

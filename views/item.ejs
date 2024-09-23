@@ -26,11 +26,12 @@
 
     <!-- Update -->
    <form id="updateForm" action="/item/update/" method="POST">
+        <input type="hidden" name="_id" id="updateId">
         <label for="updateName">Item Name:</label>
-        <input type="text" id="updateName" name="name" placeholder="update item name" required>
+        <input type="text" id="updateName" name="name" placeholder="New item name" required>
 
         <label for="updateDescription">Item Description:</label>
-        <input type="text" id="updateDescription" name="description" placeholder="update item description" required>
+        <input type="text" id="updateDescription" name="description" placeholder="New item description" required>
         
         <button type="submit">Update Item</button>
     </form>
@@ -38,14 +39,14 @@
     <!-- Item List -->
     <ul id="itemList">
         <% items.forEach((item) => { %>
-            <li>
-                <span><%= item.name %> : <%= item.description %></span>
-                <button onclick="editItem('<%= item._id %>', '<%= item.name %>', '<%= item.description %>')">Edit</button>
-                <button onclick="deleteItem('<%= item._id %>')">Delete</button>
-            </li>
+          <li>
+            <span><%= item.name %>: <%= item.description %></span>
+            <button onclick="editItem('<%= item._id %>', '<%= item.name %>', '<%= item.description %>')">Edit</button>
+            <button onclick="deleteItem('<%= item._id %>')">Delete</button>
+          </li>
         <% }); %>
-        <li></li>
-    </ul>
+      </ul>
+      
     <script src="/js/script.js"></script>
 </body>
 </html>
