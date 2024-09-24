@@ -13,9 +13,10 @@
     </header>
 
     <!-- Create -->
-    <!-- The submit button take all of the information entered in the form and buddles all of that into an object to be sent as a request based on the method in the opening tag of the form -->
+    <!-- The submit button take all of the information entered in the form and bundles all of that into an object to be sent as a request based on the method in the opening tag of the form -->
     <form id="createForm" action="/item" method="POST">
-        <label for="itemName">Item Name:</label>
+      <!-- The "for" attribute in the label tag connects it to the input field with the id of the same name" -->
+        <label for="itemName">Item Name:</label> 
         <input type="text" id="itemName" name="name" placeholder="Item name" required>
 
         <label for="itemDescription">Item Description:</label>
