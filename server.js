@@ -7,7 +7,6 @@ const cors = require('cors')
 const Item = require('./models/item')
 
 
-
 // connectDB()
 mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.nb0y2.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`)
 .then(() => console.log('MongoDB Connected'))
@@ -42,7 +41,6 @@ app.get('/item', async (req, res) => {
     const items = await Item.find({})
     res.render('item', {items})
 })
-
 
 
 
