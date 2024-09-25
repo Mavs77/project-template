@@ -37,9 +37,10 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+//defines a GET route that retrieves items from the database and renders them on the page
 app.get('/item', async (req, res) => {
-    const items = await Item.find({})
-    res.render('item', {items})
+    const items = await Item.find({}) //Mongoose query method used to retrieve documents (entries) from the MongoDB database. The empty object {} means find all documents in the Item collection
+    res.render('item', {items})//used to render a template (like EJS). Takes two arguments, (1) name of the template and (2) an object that contains data to be passed to the template, in this case, {items} is the data being passed, where items contains the array of items retrieved from the database. 
 })
 
 
