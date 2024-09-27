@@ -32,12 +32,17 @@ app.use(express.urlencoded({ extended: true }))
 //allows your app to parse JSON-formatted data from incoming requests (e.g., when receiving JSON from a frontend or API)
 app.use(express.json()) 
 
-//setup routes for which the server is listening 
+//route handler for root path ('/'). When user visits the homepage ('/'), this route will be triggered.  
 app.get('/', (req, res) => {
-    res.render('index')
+    try{
+        res.render('index')
+    }
+    catch (err) {
+        console.log('Error:', err)
+    }
 })
 
-//defines a GET route that retrieves items from the database and renders them on the page
+//Route handler. Defines a GET route that retrieves items from the database and renders them on the page
 app.get('/item', async (req, res) => {
     try {
         const items = await Item.find({}) //Mongoose query method used to retrieve documents (entries) from the MongoDB database. The empty object {} means find all documents in the Item collection
@@ -50,11 +55,11 @@ app.get('/item', async (req, res) => {
 
 
 
-//Create 
+//Create. When the form in your front-end submits data, this route is triggered. 
 app.post('/item', async (req, res) => {
-    const newItem = new Item(req.body)
+    const newItem = new Item(req.body) //this line creates a new instance of the Item model using the data sent by the client. Creates new document to be stored in MongoDB 
     try{
-        await newItem.save()
+        await newItem.save() //saves the newly created Item to the MongoDB database
         res.redirect('/item'); 
     }
     catch (err) {
