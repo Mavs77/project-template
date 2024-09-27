@@ -70,7 +70,8 @@ app.post('/item', async (req, res) => {
 
  //Update
 app.post('/item/update/:id', async (req, res) => {
-    const {id} = req.params; 
+    console.log(req)
+    const {id} = req.params; //extracting the parameter (id) from the request URL
     const {name, description} = req.body
     try{
         await Item.findByIdAndUpdate(id, {name, description})
